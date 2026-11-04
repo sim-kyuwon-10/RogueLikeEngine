@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,6 +10,7 @@ public class BoardManager : MonoBehaviour
     public class CellData
     {
         public bool Passable;
+        public GameObject containObject;
     }
     
     private Tilemap _tilemap;
@@ -19,16 +21,15 @@ public class BoardManager : MonoBehaviour
 
     private CellData[,] _boardData;
 
+    public GameObject[] _foodPrefab;
+
+    private List<Vector2Int> _emptyCellList = new();
+    
     private void Awake()
     {
         _tilemap = GetComponentInChildren<Tilemap>();
     }
-
-    private void Start()
-    {
-        CreateBoard();
-    }
-
+    
     public void CreateBoard()
     { 
         _boardData = new CellData[width, height];
@@ -53,9 +54,30 @@ public class BoardManager : MonoBehaviour
                     tile = tiles[randomIndex];
                     
                     _boardData[i, j].Passable = true;
+                    
+                    _emptyCellList.Add(new Vector2Int(i, j));
                 }
                 _tilemap.SetTile(new Vector3Int(i, j, 0), tile);
             }
+        }
+
+        _emptyCellList.Remove(new Vector2Int(1,1));
+        CreateFood();
+    }
+
+    public void CreateFood()
+    {
+        int foodcount = Random.Range(1, 6);
+        
+        for (int i = 0; i < foodcount; i++)
+        {
+            int randomFood = Random.Range(0, _foodPrefab.Length);
+            int randomIndex = Random.Range(0, _emptyCellList.Count);
+            
+            var food = Instantiate(_foodPrefab[randomFood]);
+            food.transform.position = GetCellPosition(_emptyCellList[randomIndex]);
+            
+            _emptyCellList.RemoveAt(randomIndex);
         }
     }
 

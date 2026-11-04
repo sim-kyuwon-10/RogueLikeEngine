@@ -444,6 +444,9 @@ MonoBehaviour:
   width: 8
   height: 8
   player: {fileID: 204794390}
+  _foodPrefab:
+  - {fileID: 1765375870401415499, guid: d0b5ac74b9a7b184aaf2f89eb17622bb, type: 3}
+  - {fileID: 272288648062808061, guid: 1fda6100f888f204092888a594c9e6fc, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
