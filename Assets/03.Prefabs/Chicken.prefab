@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7828746695666889640}
   - component: {fileID: 4621934288858429729}
+  - component: {fileID: -8669579078313082886}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -91,3 +92,16 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-8669579078313082886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765375870401415499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a35d209b9ef8964bbddb195e17ee550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodObject
+  value: 5

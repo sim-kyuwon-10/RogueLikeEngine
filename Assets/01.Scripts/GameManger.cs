@@ -9,7 +9,9 @@ public class GameManger : MonoBehaviour
     [field:SerializeField]public PlayerController PlayerController { get; private set; }
     [field:SerializeField]public TurnManager TurnManager { get; private set; }
 
-    private int _foodCount = 10;
+    public int _foodCount { get; private set; } = 10;
+
+    public Action<int> OnFoodAmountChanged;
 
     private void Awake()
     {
@@ -29,5 +31,11 @@ public class GameManger : MonoBehaviour
     private void OnTurnHappened()
     {
         _foodCount--;
+    }
+
+    public void ChangeFood(int amount)
+    {
+        _foodCount += amount;
+        OnFoodAmountChanged?.Invoke(_foodCount);
     }
 }

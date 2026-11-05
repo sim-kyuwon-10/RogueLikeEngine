@@ -10,7 +10,7 @@ public class BoardManager : MonoBehaviour
     public class CellData
     {
         public bool Passable;
-        public GameObject containObject;
+        public CellObject containObject;
     }
     
     private Tilemap _tilemap;
@@ -75,8 +75,10 @@ public class BoardManager : MonoBehaviour
             int randomIndex = Random.Range(0, _emptyCellList.Count);
             
             var food = Instantiate(_foodPrefab[randomFood]);
+            //Vector2Int cellpos = 
             food.transform.position = GetCellPosition(_emptyCellList[randomIndex]);
-            
+            _boardData[_emptyCellList[randomIndex].x, _emptyCellList[randomIndex].y].containObject = food.GetComponent<CellObject>();
+            //_boardData[cellpos.x, cellpos.y].containObject = food.GetComponent<CellObject>();
             _emptyCellList.RemoveAt(randomIndex);
         }
     }
