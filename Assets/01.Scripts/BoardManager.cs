@@ -75,8 +75,8 @@ public class BoardManager : MonoBehaviour
         {
             int randomFood = Random.Range(0, _foodPrefab.Length);
             int randomIndex = Random.Range(0, _emptyCellList.Count);
-            
-            var food = Instantiate(_foodPrefab[randomFood])
+
+            var food = Instantiate(_foodPrefab[randomFood]);
             food.transform.position = GetCellPosition(_emptyCellList[randomIndex]);
             _boardData[_emptyCellList[randomIndex].x, _emptyCellList[randomIndex].y].containObject = food.GetComponent<CellObject>();
             _emptyCellList.RemoveAt(randomIndex);
