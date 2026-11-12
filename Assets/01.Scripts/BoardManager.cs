@@ -22,6 +22,7 @@ public class BoardManager : MonoBehaviour
     private CellData[,] _boardData;
 
     public GameObject[] _foodPrefab;
+    public GameObject _obstaclePrefab;
 
     private List<Vector2Int> _emptyCellList = new();
     
@@ -62,6 +63,7 @@ public class BoardManager : MonoBehaviour
         }
 
         _emptyCellList.Remove(new Vector2Int(1,1));
+        CreateObstacle();
         CreateFood();
     }
 
@@ -74,11 +76,26 @@ public class BoardManager : MonoBehaviour
             int randomFood = Random.Range(0, _foodPrefab.Length);
             int randomIndex = Random.Range(0, _emptyCellList.Count);
             
-            var food = Instantiate(_foodPrefab[randomFood]);
-            //Vector2Int cellpos = 
+            var food = Instantiate(_foodPrefab[randomFood])
             food.transform.position = GetCellPosition(_emptyCellList[randomIndex]);
             _boardData[_emptyCellList[randomIndex].x, _emptyCellList[randomIndex].y].containObject = food.GetComponent<CellObject>();
-            //_boardData[cellpos.x, cellpos.y].containObject = food.GetComponent<CellObject>();
+            _emptyCellList.RemoveAt(randomIndex);
+        }
+    }
+
+    public void CreateObstacle()
+    {
+        int ObstacleCnt = Random.Range(6, 10);
+        
+        for (int i = 0; i < ObstacleCnt; i++)
+        {
+            int randomIndex = Random.Range(0, _emptyCellList.Count);
+            var obstacle = Instantiate(_obstaclePrefab);
+
+            Vector2Int cellPos = _emptyCellList[randomIndex];
+            obstacle.GetComponent<CellObject>().Init(cellPos);
+            obstacle.transform.position = GetCellPosition(cellPos);
+            _boardData[cellPos.x, cellPos.y].containObject = obstacle.GetComponent<CellObject>();
             _emptyCellList.RemoveAt(randomIndex);
         }
     }
@@ -95,5 +112,10 @@ public class BoardManager : MonoBehaviour
             return null;
         }
         return _boardData[cellPos.x, cellPos.y];
+    }
+
+    public void SetCellTile(Vector2Int cellPos, Tile tile)
+    {
+        _tilemap.SetTile((Vector3Int)cellPos, tile);
     }
 }

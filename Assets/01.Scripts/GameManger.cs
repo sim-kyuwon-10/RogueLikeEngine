@@ -31,6 +31,7 @@ public class GameManger : MonoBehaviour
     private void OnTurnHappened()
     {
         _foodCount--;
+        OnFoodAmountChanged?.Invoke(_foodCount);
     }
 
     public void ChangeFood(int amount)

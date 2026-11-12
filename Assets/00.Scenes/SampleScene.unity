@@ -447,6 +447,7 @@ MonoBehaviour:
   _foodPrefab:
   - {fileID: 1765375870401415499, guid: d0b5ac74b9a7b184aaf2f89eb17622bb, type: 3}
   - {fileID: 272288648062808061, guid: 1fda6100f888f204092888a594c9e6fc, type: 3}
+  _obstaclePrefab: {fileID: 8488090420827875271, guid: 12c7cd8d93edf3343b67982e0360ac46, type: 3}
 --- !u!1 &389020476
 GameObject:
   m_ObjectHideFlags: 0
