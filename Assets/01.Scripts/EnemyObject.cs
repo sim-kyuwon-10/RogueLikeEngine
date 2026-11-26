@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class EnemyObject : CellObject
 {
-
+    private BoardManager _board;
+    
     private void Start()
     {
+        _board = GameManger.Instance.BoardManager;
         GameManger.Instance.TurnManager.OnTick += TurnHappend;
     }
 
@@ -28,7 +30,13 @@ public class EnemyObject : CellObject
 
         if ((absXDist == 0 && absYDist == 1) || (absXDist == 1 && absYDist == 0))
         {
+            var currentCell = _board.GetCellData(_cell);
+            currentCell.containObject = null;
+
+            transform.position = _board.GetCellPosition(playerCell);
+            
             GameManger.Instance.Boom();
+            GameManger.Instance.OnGameOver(true);
         }
         else
         {
@@ -71,20 +79,19 @@ public class EnemyObject : CellObject
 
     private bool MoveTo(Vector2Int cellPos)
     {
-        var board = GameManger.Instance.BoardManager;
-        var data =board.GetCellData(cellPos);
+        var data = _board.GetCellData(cellPos);
 
         if (data == null || !data.Passable || data.containObject != null)
         {
             return false;
         }
 
-        var currentCell = board.GetCellData(_cell);
+        var currentCell = _board.GetCellData(_cell);
         currentCell.containObject = null;
 
         data.containObject = this;
         _cell = cellPos;
-        transform.position = board.GetCellPosition(_cell);
+        transform.position = _board.GetCellPosition(_cell);
 
         return true;
     }
