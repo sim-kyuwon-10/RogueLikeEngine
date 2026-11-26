@@ -6,6 +6,32 @@ public class PlayerController : MonoBehaviour
 {
     private BoardManager _boardManager;
     private Vector2Int _cellPos;
+    public bool _isDead = false;
+
+    public bool IsDead => _isDead;
+    public Vector2Int Cellpos => _cellPos;
+
+    private PlayerAnimation _playerAnimation;
+
+    private void Awake()
+    {
+        _playerAnimation = GetComponentInChildren<PlayerAnimation>();
+    }
+
+    private void Start()
+    {
+        GameManger.Instance.OnGameOver += Dead;
+    }
+
+    private void Dead(bool value)
+    {
+        _isDead = value;
+    }
+
+    private void OnDestroy()
+    {
+        GameManger.Instance.OnGameOver -= Dead;
+    }
 
     public void Spawn(BoardManager boardManager, Vector2Int cellPos)
     {
@@ -16,6 +42,15 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
+    {
+        if (_isDead)
+        return;
+        
+        CheckMove();
+    }
+    
+    
+    public void CheckMove()
     {
         Vector2Int nextCell = _cellPos;
         
@@ -48,13 +83,26 @@ public class PlayerController : MonoBehaviour
 
             if (cellData != null && cellData.Passable)
             {
-                GameManger.Instance.TurnManager.Tick();
-                transform.position = _boardManager.GetCellPosition(nextCell);
-                _cellPos = nextCell;
-                
-                if(cellData.containObject != null)
+                if (cellData.containObject == null)
+                {
+                    transform.position = _boardManager.GetCellPosition(nextCell);
+                    _cellPos = nextCell;
+                }
+                else if (cellData.containObject.PlayerWantedEnter())
+                {
+                    transform.position = _boardManager.GetCellPosition(nextCell);
+                    _cellPos = nextCell;
+                    
                     cellData.containObject.PlayerEntered();
+                }
+                else
+                {
+                    _playerAnimation.Attack();
+                }
+                GameManger.Instance.TurnManager.Tick();
             }
         }
+
+
     }
 }

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8488090420827875271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.60037, y: 544.3329, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 327e617726c3b1349a1153f606b77b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  tile: {fileID: 11400000, guid: 68a54f5265c613f47a3ed3bee6ce8f78, type: 2}
+  ObstacleTile: {fileID: 11400000, guid: 68a54f5265c613f47a3ed3bee6ce8f78, type: 2}
+  broeknTile: {fileID: 11400000, guid: 9902f30a7e07e93418152b63cddddedc, type: 2}
